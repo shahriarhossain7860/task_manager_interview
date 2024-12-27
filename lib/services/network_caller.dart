@@ -15,7 +15,7 @@ class NetworkCaller {
         'token': AuthController.accessToken.toString(),
       };
       printRequest(url, null, headers);
-      final Response response = await get(uri, headers: headers);
+      final Response response = await get(uri, headers: {'Bearer Token': AuthController.accessToken.toString()});
       printResponse(url, response);
       if (response.statusCode == 200) {
         final decodeData = jsonDecode(response.body);
@@ -25,6 +25,7 @@ class NetworkCaller {
           responseData: decodeData,
         );
       } else if (response.statusCode == 401) {
+        print('*');
          _moveToLogin();
         return NetworkResponse(
             isSuccess: false,
